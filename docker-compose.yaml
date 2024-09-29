@@ -1,0 +1,45 @@
+services:
+  elasticsearch:
+    image: poc/elasticsearch:8.15.2
+    build:
+      context: ./src
+      dockerfile: infra/elasticsearch/Dockerfile
+    restart: always
+    volumes:
+      - es-poc-data:/data
+    environment:
+      xpack.security.enabled: false
+      discovery.type: single-node
+    deploy:
+      resources:
+        limits:
+          memory: 1gb
+    networks:
+      - default
+    expose:
+      - 9200
+    ports:
+      - 9200:9200
+
+  kibana:
+    image: poc/kibana:8.15.2
+    build:
+      context: ./src
+      dockerfile: infra/kibana/Dockerfile
+    restart: always
+    volumes:
+      - kibana-poc-data:/data
+    networks:
+      - default
+    expose:
+      - 5601
+    ports:
+      - 5601:5601
+
+volumes:
+  es-poc-data:
+  kibana-poc-data:
+
+networks:
+  default:
+    name: es_poc
