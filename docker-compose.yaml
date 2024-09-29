@@ -1,25 +1,78 @@
 services:
-  elasticsearch:
+  es01:
     image: poc/elasticsearch:8.15.2
     build:
       context: ./src
       dockerfile: infra/elasticsearch/Dockerfile
     restart: always
     volumes:
-      - es-poc-data:/data
+      - esdata01:/usr/share/elasticsearch/data
     environment:
-      xpack.security.enabled: false
-      discovery.type: single-node
-    deploy:
-      resources:
-        limits:
-          memory: 1gb
+      - node.name=es01
+      - cluster.name=${CLUSTER_NAME}
+      - cluster.initial_master_nodes=es01,es02,es03
+      - discovery.seed_hosts=es02,es03
+      - bootstrap.memory_lock=true
+      - xpack.security.enabled=false
+    mem_limit: ${MEM_LIMIT}
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
     networks:
       - default
-    expose:
-      - 9200
     ports:
-      - 9200:9200
+      - ${ES_PORT}:9200
+
+  es02:
+    image: poc/elasticsearch:8.15.2
+    build:
+      context: ./src
+      dockerfile: infra/elasticsearch/Dockerfile
+    restart: always
+    depends_on:
+      - es01
+    volumes:
+      - esdata02:/usr/share/elasticsearch/data
+    environment:
+      - node.name=es02
+      - cluster.name=${CLUSTER_NAME}
+      - cluster.initial_master_nodes=es01,es02,es03
+      - discovery.seed_hosts=es01,es03
+      - bootstrap.memory_lock=true
+      - xpack.security.enabled=false
+    mem_limit: ${MEM_LIMIT}
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    networks:
+      - default
+
+  es03:
+    image: poc/elasticsearch:8.15.2
+    build:
+      context: ./src
+      dockerfile: infra/elasticsearch/Dockerfile
+    restart: always
+    depends_on:
+      - es02
+    volumes:
+      - esdata03:/usr/share/elasticsearch/data
+    environment:
+      - node.name=es03
+      - cluster.name=${CLUSTER_NAME}
+      - cluster.initial_master_nodes=es01,es02,es03
+      - discovery.seed_hosts=es01,es02
+      - bootstrap.memory_lock=true
+      - xpack.security.enabled=false
+    mem_limit: ${MEM_LIMIT}
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    networks:
+      - default
 
   kibana:
     image: poc/kibana:8.15.2
@@ -27,18 +80,25 @@ services:
       context: ./src
       dockerfile: infra/kibana/Dockerfile
     restart: always
+    depends_on:
+      - es01
+      - es02
+      - es03
+    environment: 
+      - SERVERNAME=kibana
+      - ELASTICSEARCH_HOSTS=http://es01:9200
     volumes:
-      - kibana-poc-data:/data
+      - kibana-data:/usr/share/kibana/data
     networks:
       - default
-    expose:
-      - 5601
     ports:
-      - 5601:5601
+      - ${KIBANA_PORT}:5601
 
 volumes:
-  es-poc-data:
-  kibana-poc-data:
+  esdata01:
+  esdata02:
+  esdata03:
+  kibana-data:
 
 networks:
   default:
