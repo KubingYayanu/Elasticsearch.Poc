@@ -1,0 +1,37 @@
+{
+  "mappings": {
+    "properties": {
+      "title": {
+        "type": "text"
+      },
+      "year": {
+        "type": "integer"
+      },
+      "cast": {
+        "type": "keyword"
+      },
+      "genres": {
+        "type": "keyword"
+      },
+      "href": {
+        "type": "keyword"
+      },
+      "extract": {
+        "type": "text"
+      },
+      "thumbnail": {
+        "type": "keyword"
+      },
+      "thumbnail_width": {
+        "type": "integer"
+      },
+      "thumbnail_height": {
+        "type": "integer"
+      },
+      "release_date": {
+        "type": "date",
+        "format": "strict_date_optional_time||epoch_millis"
+      }
+    }
+  }
+}
