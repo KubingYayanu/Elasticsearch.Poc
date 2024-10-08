@@ -1,36 +1,71 @@
 {
   "mappings": {
     "properties": {
-      "title": {
-        "type": "text"
-      },
-      "year": {
-        "type": "integer"
-      },
       "cast": {
-        "type": "keyword"
-      },
-      "genres": {
-        "type": "keyword"
-      },
-      "href": {
-        "type": "keyword"
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
       },
       "extract": {
-        "type": "text"
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
       },
-      "thumbnail": {
-        "type": "keyword"
+      "genres": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
       },
-      "thumbnail_width": {
-        "type": "integer"
-      },
-      "thumbnail_height": {
-        "type": "integer"
+      "href": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
       },
       "release_date": {
-        "type": "date",
-        "format": "strict_date_optional_time||epoch_millis"
+        "type": "date"
+      },
+      "thumbnail": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
+      },
+      "thumbnail_height": {
+        "type": "long"
+      },
+      "thumbnail_width": {
+        "type": "long"
+      },
+      "title": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
+      },
+      "year": {
+        "type": "long"
       }
     }
   }
