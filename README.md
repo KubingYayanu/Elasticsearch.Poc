@@ -37,3 +37,12 @@ $ docker compose -f docker-compose.yaml -p es-poc up -d --build
 ```
 
 - Kibana: `http://localhost:5601`
+
+# Sample Data
+
+```bash
+# 透過 mapping 建立 index - movies
+$ curl -H "Content-Type: application/x-ndjson" -XPUT "localhost:9200/movies" --data-binary "@src/infra/elasticsearch/data/01.movies_mappings.json"
+
+$ curl -H "Content-Type: application/x-ndjson" -XPOST "localhost:9200/_bulk" --data-binary "@src/infra/elasticsearch/data/02.bulk_movies.json"
+```
