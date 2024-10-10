@@ -60,7 +60,7 @@ $ curl --cacert ./src/infra/certs/ca.crt -u elastic:${ELASTIC_PASSWORD} https://
 
 ```bash
 # 透過 mapping 建立 index - movies
-$ curl -H "Content-Type: application/x-ndjson" -XPUT "localhost:9200/movies" --data-binary "@src/infra/elasticsearch/data/01.movies_mappings.json"
+$ curl -u elastic:${ELASTIC_PASSWORD} --cacert ./src/infra/certs/ca.crt -H "Content-Type: application/x-ndjson" -XPUT "https://localhost:9200/movies" --data-binary "@src/infra/elasticsearch/data/01.movies_mappings.json"
 
-$ curl -H "Content-Type: application/x-ndjson" -XPOST "localhost:9200/_bulk" --data-binary "@src/infra/elasticsearch/data/02.bulk_movies.json"
+$ curl -u elastic:${ELASTIC_PASSWORD} --cacert ./src/infra/certs/ca.crt -H "Content-Type: application/x-ndjson" -XPOST "https://localhost:9200/_bulk" --data-binary "@src/infra/elasticsearch/data/02.bulk_movies.json"
 ```
