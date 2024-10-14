@@ -24,11 +24,10 @@ namespace Elasticsearch.Poc.Helpers
 
         private IElasticsearchClientSettings GetSettings()
         {
-            var nodes = _options.Clusters
-                .SelectMany(x => x.Nodes!)
-                .Select(x => new Uri(x.Url!));
-            var pool = new StaticNodePool(nodes);
-            var settings = new ElasticsearchClientSettings(pool);
+            var cluster = _options.Cluster;
+            var uri = new Uri(cluster.Url!);
+            var settings = new ElasticsearchClientSettings(uri)
+                .Authentication(new BasicAuthentication(cluster.Username!, cluster.Password!));
 
             return settings;
         }

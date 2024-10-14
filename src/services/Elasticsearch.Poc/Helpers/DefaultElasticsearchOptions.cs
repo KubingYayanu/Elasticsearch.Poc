@@ -4,6 +4,6 @@
     {
         public string Section => "Elasticsearch";
 
-        public List<Cluster> Clusters { get; set; } = new();
+        public Cluster Cluster { get; set; } = null!;
     }
 }

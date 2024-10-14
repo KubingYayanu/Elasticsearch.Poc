@@ -7,16 +7,15 @@
         /// </summary>
         string Section { get; }
 
-        List<Cluster> Clusters { get; set; }
+        Cluster Cluster { get; set; }
     }
 
     public class Cluster
     {
-        public List<Node>? Nodes { get; set; }
-    }
-
-    public class Node
-    {
         public string? Url { get; set; }
+
+        public string? Username { get; set; }
+
+        public string? Password { get; set; }
     }
 }
