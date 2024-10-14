@@ -13,7 +13,7 @@ namespace Elasticsearch.Poc.IoC
             where TOptions : class, IElasticsearchOptions, new()
         {
             services.Configure<TOptions>(options => { configuration.GetSection(options.Section).Bind(options); });
-            services.TryAddSingleton<IElasticsearchClientFactory, ElasticsearchClientFactory<TOptions>>();
+            services.TryAddSingleton<IElasticsearchHelper<TOptions>, ElasticsearchHelper<TOptions>>();
 
             return services;
         }

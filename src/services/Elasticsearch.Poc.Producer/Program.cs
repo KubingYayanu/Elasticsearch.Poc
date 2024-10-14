@@ -1,6 +1,4 @@
-﻿using Elasticsearch.Poc.Helpers;
-using Elasticsearch.Poc.IoC;
-using Elasticsearch.Poc.Producer.IoC;
+﻿using Elasticsearch.Poc.Producer.IoC;
 using Elasticsearch.Poc.Producer.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -71,7 +69,6 @@ class Program
 
     private static void ConfigureServices(HostBuilderContext host, IServiceCollection services)
     {
-        services.AddElasticsearchHelper<DefaultElasticsearchOptions>(host.Configuration);
         services.AddApplicationServices(host.Configuration);
     }
 }
