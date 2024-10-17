@@ -27,8 +27,12 @@ namespace Elasticsearch.Poc.Helpers
         {
             var cluster = _options.Cluster;
             var uri = new Uri(cluster.Url!);
-            var settings = new ElasticsearchClientSettings(uri)
-                .Authentication(new BasicAuthentication(cluster.Username!, cluster.Password!));
+            var settings = new ElasticsearchClientSettings(uri);
+
+            if (!string.IsNullOrWhiteSpace(cluster.Username))
+            {
+                settings.Authentication(new BasicAuthentication(cluster.Username!, cluster.Password!));
+            }
 
             return settings;
         }
