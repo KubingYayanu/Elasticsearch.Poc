@@ -11,23 +11,11 @@ $ docker compose -f docker-compose.yaml -p es-poc up -d
 $ docker compose -f docker-compose.yaml -p es-poc up -d --build
 ```
 
-- 測試登入 Elasticsearch
-
-```bash
-# Copy the ca.crt SSL certificate from the container to your local machine.
-$ docker cp es-poc-es01-1:/usr/share/elasticsearch/config/certs/ca/ca.crt ./src/infra/certs/ca.crt
-
-# Make REST API to test
-$ curl --cacert ./src/infra/certs/ca.crt -u elastic:${ELASTIC_PASSWORD} https://localhost:9200
-```
-
 # Endpoint
 
 ## Elasticsearch
 
-- Url: `https://localhost:9200`
-- Username: `elastic`
-- Password: `${ELASTIC_PASSWORD}`
+- Url: `http://localhost:9200`
 
 ```json
 // 如果成功啟動會出現以下內容
@@ -50,17 +38,11 @@ $ curl --cacert ./src/infra/certs/ca.crt -u elastic:${ELASTIC_PASSWORD} https://
 }
 ```
 
-## Kibana
-
-- Url: `http://localhost:5601`
-- username: `elastic`
-- password: `${ELASTIC_PASSWORD}`
-
 # Sample Data
 
 ```bash
 # 透過 mapping 建立 index - movies
-$ curl -u elastic:${ELASTIC_PASSWORD} --cacert ./src/infra/certs/ca.crt -H "Content-Type: application/x-ndjson" -XPUT "https://localhost:9200/movies" --data-binary "@src/infra/elasticsearch/data/01.movies_mappings.json"
+$ curl -H "Content-Type: application/x-ndjson" -XPUT "http://localhost:9200/movies" --data-binary "@src/infra/elasticsearch/data/01.movies_mappings.json"
 
-$ curl -u elastic:${ELASTIC_PASSWORD} --cacert ./src/infra/certs/ca.crt -H "Content-Type: application/x-ndjson" -XPOST "https://localhost:9200/_bulk" --data-binary "@src/infra/elasticsearch/data/02.bulk_movies.json"
+$ curl -H "Content-Type: application/x-ndjson" -XPOST "http://localhost:9200/_bulk" --data-binary "@src/infra/elasticsearch/data/02.bulk_movies.json"
 ```
