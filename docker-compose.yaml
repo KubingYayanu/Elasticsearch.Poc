@@ -94,7 +94,7 @@ services:
       - xpack.security.transport.ssl.certificate_authorities=certs/ca/ca.crt
       - xpack.security.transport.ssl.verification_mode=certificate
       - xpack.license.self_generated.type=${LICENSE}
-    mem_limit: ${MEM_LIMIT}
+      - ES_JAVA_OPTS=-Xms${JVM_HEAP_SIZE} -Xmx${JVM_HEAP_SIZE}
     ulimits:
       memlock:
         soft: -1
@@ -142,7 +142,7 @@ services:
       - xpack.security.transport.ssl.certificate_authorities=certs/ca/ca.crt
       - xpack.security.transport.ssl.verification_mode=certificate
       - xpack.license.self_generated.type=${LICENSE}
-    mem_limit: ${MEM_LIMIT}
+      - ES_JAVA_OPTS=-Xms${JVM_HEAP_SIZE} -Xmx${JVM_HEAP_SIZE}
     ulimits:
       memlock:
         soft: -1
@@ -188,7 +188,7 @@ services:
       - xpack.security.transport.ssl.certificate_authorities=certs/ca/ca.crt
       - xpack.security.transport.ssl.verification_mode=certificate
       - xpack.license.self_generated.type=${LICENSE}
-    mem_limit: ${MEM_LIMIT}
+      - ES_JAVA_OPTS=-Xms${JVM_HEAP_SIZE} -Xmx${JVM_HEAP_SIZE}
     ulimits:
       memlock:
         soft: -1
@@ -227,7 +227,6 @@ services:
       - ELASTICSEARCH_USERNAME=${KIBANA_USERNAME}
       - ELASTICSEARCH_PASSWORD=${KIBANA_PASSWORD}
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=config/certs/ca/ca.crt
-    mem_limit: ${MEM_LIMIT}
     networks:
       - default
     ports:
