@@ -38,6 +38,10 @@ $ docker compose -f docker-compose.yaml -p es-poc up -d --build
 }
 ```
 
+## Kibana
+
+- Url: `http://localhost:5601`
+
 # Sample Data
 
 ```bash
